@@ -28,11 +28,11 @@ nav_lists:
       zh-Hant: 關於
     url: /about.html
 
- paths:
-   base: /
-   home: /
-   all:  /all.html
-   rss:  /index.xml
+# paths:
+   #base: /
+   #home: /
+   #all:  /all.html
+   #rss:  /index.xml
 
 ## GitHub repository (if the site is hosted by GitHub) ##
 # repository:  #e.g. someone/someone.github.io
