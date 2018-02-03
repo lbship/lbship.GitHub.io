@@ -4,7 +4,7 @@ default:
     base: /
     home: /
     all:  /all.html
-    rss:  /index.xml
+    # rss:  /index.xml
   lang: zh
   toc:
     selectors: 'h1,h2,h3'
