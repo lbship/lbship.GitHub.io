@@ -7,9 +7,4 @@ titles:
   zh-Hant: 關於
 key: page-about
 ---
-
-Just say something about yourself. :+1:
-
-{% highlight javascript %}
-  (() => console.log('hello, world!'))();
-{% endhighlight %}
+一个简单的人，正在努力做着不简单的事情
