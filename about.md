@@ -12,4 +12,4 @@ key: page-about
 - Dream what you want to dream;go where you want to go;be what you want to be,because you have only one life and one chance to do all the things you want to do.   
 ![][avatar]
 
-[avatar]: https://connorlin.github.io/images/avatar.jpg
+[avatar]: http://a4.qpic.cn/psb?/V11DQu3E2ElOuU/OyUPQf3qoZYpzY68ppmFAH*BmpR35icQjiYjaF*pxcw!/b/dHcBAAAAAAAA&ek=1&kp=1&pt=0&bo=oAU4BAAAAAAFB70!&vuin=852114790&tm=1522497600&sce=60-1-1&rf=viewer_4
