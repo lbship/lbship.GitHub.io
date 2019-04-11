@@ -33,9 +33,9 @@ load data local inpath 'text.txt' into table test;
   
 
 # 三、使用python编写UDF  
+
 ```  
-# encoding: utf-8
-#!/usr/bin/python
+
 import sys
 def parsesex(line):
     data=int(line)
