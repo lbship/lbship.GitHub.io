@@ -1,4 +1,4 @@
-#一、POM配置
+# 一、POM配置
 
 因为使用windows的IDEA连接虚拟机中的Spark，所有要配置一下依赖  
 ```  
@@ -115,9 +115,9 @@
  
  ```  
 
-二、实时接收网络数据
+# 二、实时接收网络数据
 
-1.代码
+- 1.代码
 ```  
 
 package Sparkstreaming
@@ -160,7 +160,7 @@ object NetWorkCount {
  
 }  
 ```  
-2.测试
+- 2.测试
 
 在虚拟机中开启新开一个窗口，输入nc -lk 6789
 
@@ -170,11 +170,11 @@ object NetWorkCount {
 
 
 
-3.报错处理。
+- 3.报错处理。
 
 在Windows运行的时候，可能会报错 Failed to locate the winutils binary in the hadoop binary path，可以到GitHub下载整个bin目录，然后修改本机的环境变量。在cmd中测试一下输入hadoop看看环境是否设置成功。
 
-三、实时接收本地hdfs数据
+# 三、实时接收本地hdfs数据
 
 1.代码
 ```  
@@ -196,9 +196,9 @@ object Filewordcount {
  
 }
 ```  
-四、做名单过滤
+# 四、做名单过滤
 
-1.代码
+- 1.代码
 ```  
 package Sparkstreaming
  
@@ -222,7 +222,7 @@ object Filtername {
   }
 }
 ```   
-2.测试
+- 2.测试
 
 在控制台输入2017,now  2018,good可以发现只有2018，good打印出来而已
 ![image](https://raw.githubusercontent.com/lbship/lbship.github.io/master/img/hadoop2.6/flume2.png)  
