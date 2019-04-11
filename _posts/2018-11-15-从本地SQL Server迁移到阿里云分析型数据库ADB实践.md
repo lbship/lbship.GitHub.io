@@ -66,7 +66,8 @@ Endpoint配置参考：
 
 https://help.aliyun.com/document_detail/31837.html?spm=a2c4g.11186623.6.572.49661c62kbQsIM 
 
-Endpoint分内网和外网，使用内网速度会比较快。不用测试连通性，专用网络无法测试。bucket就是OSS的bucket名称。
+Endpoint分内网和外网，使用内网速度会比较快。不用测试连通性，专用网络无法测试。bucket就是OSS的bucket名称。  
+
 ![image](https://raw.githubusercontent.com/lbship/lbship.github.io/master/img/ads/ads3.png) 
 
 
