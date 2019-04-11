@@ -28,10 +28,9 @@ lin,2
  ```  
 
 加载进表里
-```  
+ 
 load data local inpath 'text.txt' into table test;
-
-```  
+  
 
 # 三、使用python编写UDF
 ```  
@@ -50,7 +49,6 @@ for line in sys.stdin:
     line = line.strip()
     print(parsesex(line))  
 ```   
-
 # 四、测试
 
 在hive里面加载py文件
