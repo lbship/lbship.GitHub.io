@@ -20,14 +20,13 @@ row format delimited fields terminated by ',';
 
 内容如下：  
 
-```  
+
 li,2
 liu,1
 wang,1
 zhao,2
 lin,2  
-
- ```  
+  
 
 加载进表里
  
