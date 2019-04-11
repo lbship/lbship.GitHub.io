@@ -1,4 +1,4 @@
-一、数据库官网介绍：  
+# 一、数据库官网介绍：  
 
   分析型数据库（AnalyticDB），是阿里巴巴自主研发的海量数据实时高并发在线分析（Realtime OLAP）云计算服务，使得您可以在毫秒级针对千亿级数据进行即时的多维分析透视和业务探索。分析型数据库对海量数据的自由计算和极速响应能力，能让用户在瞬息之间进行灵活的数据探索，快速发现数据价值，并可直接嵌入业务系统为终端客户提供分析服务
 
@@ -10,12 +10,12 @@
 
 本次实践分为两大部分，历史数据同步（大约10亿条）和增量数据导入。同时有一部分数据源是Excel形式存在的，直接利用Kettle进行传输。
 
-二、历史数据同步
+# 二、历史数据同步
 
-1.在ADB建表
+- 1.在ADB建表
 
 有两种方式建表，一种是可视化，一种是命令的。语法有点像HQL的语法，默认设置128个分区，需要设置组名，把表进行分组。更新方式设置为实时更新
-
+```  
  CREATE TABLE 
 库名.表名 (
 unknown1 varchar , 
@@ -28,7 +28,8 @@ primary key (字段1，字段2)
 PARTITION BY HASH KEY(字段1) PARTITION NUM 128
 TABLEGROUP 组名
 OPTIONS(UPDATETYPE='realtime'),
-2.开通VPC专线
+```  
+- 2.开通VPC专线
 
 一种是可视化操作，另一种是命令，先登录数据库：
 
@@ -41,7 +42,7 @@ ALTER DATABASE 库名
 SET zone_id='cn-xxxxx' 
     vpc_id='vpc-xxxxxx' 
 vswitch_id='vsw-xxxxx';
-3.通过DataWorks导入历史数据：
+- 3.通过DataWorks导入历史数据：
 
 a.开通Dataworks（由管理员操作）
 
@@ -89,15 +90,15 @@ https://help.aliyun.com/document_detail/100640.html?spm=a2c4g.11186623.2.22.220a
 ![image](https://raw.githubusercontent.com/lbship/lbship.github.io/master/img/ads/ads7.png) 
 
 
-三、增量数据同步
+# 三、增量数据同步
 
-1.新增本地SQL server数据源
+- 1.新增本地SQL server数据源
 
 这里我是使用了有公网ip的数据源，如果3306端口有限制，需要对阿里云ip进行授权访问。如果没有公网ip的数据源，就是纯内网的，可以找一台有公网和内网访问的机器作为桥接，设置为共享资源组就行了。
 
 ![image](https://raw.githubusercontent.com/lbship/lbship.github.io/master/img/ads/ads8.png) 
 
-2.配置同步任务
+- 2.配置同步任务
 
 操作方法类似oss同步，可以添加过滤调节，下面的切分键可以分批查询本地数据源，提高数据传输效率。
 
