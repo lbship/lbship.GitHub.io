@@ -1,4 +1,4 @@
-一、模拟产生日志
+# 一、模拟产生日志
 
 在IDEA的resource文件夹下面新建log4j.properties定义日志格式,其中flume和log4j的整合配置可以查看Log4j Appender
 ```  
@@ -34,11 +34,10 @@ public class LoggerGenerator {
 ```  
 具体依赖和配置过程可以查看 Flume远程实时采集Windows产生的log4j产生的数据
 
-二、配置Flume
+# 二、配置Flume
 
-1.配置
 
-1.1配置flumekafka
+- 1.1配置flumekafka
 
 我这里使用Flume版本是1.6，所以写法和官网的不一样。如果启动flume的过程中报错.producer.requiredAcks=1, channel=c2, kafka.topic=streaming, type=org.apache.flume.sink.kafka.KafkaSink} }
 2018-12-29 06:17:26,698 (conf-file-poller-0) [ERROR - org.apache.flume.node.AbstractConfigurationProvider.loadSinks(AbstractConfigurationProvider.java:427)] Sink k2 has been removed due to an error during configuration
@@ -71,7 +70,7 @@ b1.sinks.k2.channel = c2
 ```  
 这里地方配置有点复杂，具体配置可以看官网
 
-1.3启动flume
+- 1.3启动flume
 
 可以在命令行输入flume-ng查看帮助命令，我的启动脚本是
 
@@ -83,13 +82,13 @@ flume-ng agent -n b1 -c /usr/local/src/apache-flume-1.6.0-bin/conf -f /usr/local
 ```  
 flume-ng agent -n a1 -c $FLUME_HOME/conf -f $FLUME_HOME/conf/streaming.conf -Dflume.root.logger=INFO,console >> /usr/tmp/flume/1.log & （后台启动）
 ```  
-三、配置Kafka
+# 三、配置Kafka
 
-1.启动zookeeper
+- 1.启动zookeeper
 
 到每台机器的zookeeper的bin目录输入./zkServer.sh start
 
-2.以后台形式启动kafka
+- 2.以后台形式启动kafka
 
 在每台机器上的kafka安装目录的bin目录下输入： kafka-server-start.sh -daemon $KAFKA_HOME/config/server.properties &
 
@@ -97,7 +96,7 @@ flume-ng agent -n a1 -c $FLUME_HOME/conf -f $FLUME_HOME/conf/streaming.conf -D
 
 
 
-3.新建主题
+- 3.新建主题
 
 3.1新建一个主题：kafka-topics.sh --create --zookeeper master:2181,slave1:2181,slave2:2181 --replication-factor 1 --partitions 1 --topic streaming
 
