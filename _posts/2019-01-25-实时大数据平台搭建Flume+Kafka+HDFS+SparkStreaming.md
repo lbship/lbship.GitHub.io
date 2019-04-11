@@ -167,5 +167,5 @@ val pagecount=cleanlog.map(x=>x.ip).map((_,1)).reduceByKey(_+_)
 
 ![image](https://raw.githubusercontent.com/lbship/lbship.github.io/master/img/hadoop2.6/F5.png) 
 
-![image](https://raw.githubusercontent.com/lbship/lbship.github.io/master/img/hadoop2.6/F1.png) 
+![image](https://raw.githubusercontent.com/lbship/lbship.github.io/master/img/hadoop2.6/F6.png) 
 
