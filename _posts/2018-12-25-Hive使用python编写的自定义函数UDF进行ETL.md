@@ -32,7 +32,7 @@ lin,2
 load data local inpath 'text.txt' into table test;
   
 
-# 三、使用python编写UDF
+# 三、使用python编写UDF  
 ```  
 # encoding: utf-8
 #!/usr/bin/python
@@ -47,17 +47,22 @@ def parsesex(line):
         return 'error'
 for line in sys.stdin:
     line = line.strip()
-    print(parsesex(line))  
-```   
+    print(parsesex(line))    
+    
+```  
+
 # 四、测试
+ 
 
 在hive里面加载py文件
 
 add file /usr/local/src/test.py
 
-在HQL中使用TRANSFORM函数动态执行Python文件:
+在HQL中使用TRANSFORM函数动态执行Python文件:  
 
+```  
 select TRANSFORM(sex) USING 'python test.py' as sex from test;
+```  
 
 
 ![image](https://raw.githubusercontent.com/lbship/lbship.github.io/master/img/hadoop2.6/H2.png) 
