@@ -115,9 +115,11 @@
  
  ```  
 
-# 二、实时接收网络数据
+# 二、实时接收网络数据  
 
-- 1.代码
+
+- 1.代码  
+
 ```  
 
 package Sparkstreaming
@@ -176,7 +178,8 @@ object NetWorkCount {
 
 # 三、实时接收本地hdfs数据
 
-1.代码
+1.代码  
+
 ```  
 package Sparkstreaming
  
@@ -196,9 +199,11 @@ object Filewordcount {
  
 }
 ```  
+
 # 四、做名单过滤
 
-- 1.代码
+- 1.代码  
+
 ```  
 package Sparkstreaming
  
