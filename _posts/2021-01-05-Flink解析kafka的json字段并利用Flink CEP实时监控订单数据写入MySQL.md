@@ -22,41 +22,7 @@ c.通过select或process算子筛选出符合pattern的流变成Datastream
 
 实际上就是从普通流中输出符合匹配模式的流出来。
 
-**一、pattern**
 
-pattern包含单个模式、组合模式和模式组，常用的Flink CEP API如下,来自官网:
-
-单个模式API:
-
-| **where(condition)** | 为当前模式定义一个条件。为了匹配这个模式，一个事件必须满足某些条件。 多个连续的where()语句取与组成判断条件：pattern.where(event => ... /* 一些判断条件 */) |
-| **or(condition)** | 增加一个新的判断，和当前的判断取或。一个事件只要满足至少一个判断条件就匹配到模式：pattern.where(event => ... /* 一些判断条件 */).or(event => ... /* 替代条件 */) |
-| **until(condition)** | 为循环模式指定一个停止条件。意思是满足了给定的条件的事件出现后，就不会再有事件被接受进入模式了。只适用于和oneOrMore()同时使用。提示： 在基于事件的条件中，它可用于清理对应模式的状态。pattern.oneOrMore().until(event => ... /* 替代条件 */) |
-| **subtype(subClass)** | 为当前模式定义一个子类型条件。一个事件只有是这个子类型的时候才能匹配到模式：pattern.subtype(classOf[SubEvent]) |
-| **oneOrMore()** | 指定模式期望匹配到的事件至少出现一次。.默认（在子事件间）使用松散的内部连续性。 关于内部连续性的更多信息可以参考连续性。提示： 推荐使用until()或者within()来清理状态。pattern.oneOrMore() |
-| **timesOrMore(#times)** | 指定模式期望匹配到的事件至少出现#times次。.默认（在子事件间）使用松散的内部连续性。 关于内部连续性的更多信息可以参考连续性。pattern.timesOrMore(2) |
-| **times(#ofTimes)** | 指定模式期望匹配到的事件正好出现的次数。默认（在子事件间）使用松散的内部连续性。 关于内部连续性的更多信息可以参考连续性。pattern.times(2) |
-| **times(#fromTimes, #toTimes)** | 指定模式期望匹配到的事件出现次数在#fromTimes和#toTimes之间。默认（在子事件间）使用松散的内部连续性。 关于内部连续性的更多信息可以参考连续性。pattern.times(2, 4) |
-| **optional()** | 指定这个模式是可选的，也就是说，它可能根本不出现。这对所有之前提到的量词都适用。pattern.oneOrMore().optional() |
-| **greedy()** | 指定这个模式是贪心的，也就是说，它会重复尽可能多的次数。这只对量词适用，现在还不支持模式组。pattern.oneOrMore().greedy() |
-
-组合模式API：
-
-| **consecutive()** | 与oneOrMore()和times()一起使用， 在匹配的事件之间施加严格的连续性， 也就是说，任何不匹配的事件都会终止匹配（和next()一样）。如果不使用它，那么就是松散连续（和followedBy()一样）。例如，一个如下的模式：Pattern.begin("start").where(_.getName().equals("c"))  .followedBy("middle").where(_.getName().equals("a"))                       .oneOrMore().consecutive()  .followedBy("end1").where(_.getName().equals("b"))输入：C D A1 A2 A3 D A4 B，会产生下面的输出：如果施加严格连续性： {C A1 B}，{C A1 A2 B}，{C A1 A2 A3 B}不施加严格连续性： {C A1 B}，{C A1 A2 B}，{C A1 A2 A3 B}，{C A1 A2 A3 A4 B} |
-| **allowCombinations()** | 与oneOrMore()和times()一起使用， 在匹配的事件中间施加不确定松散连续性（和followedByAny()一样）。如果不使用，就是松散连续（和followedBy()一样）。例如，一个如下的模式：Pattern.begin("start").where(_.getName().equals("c"))  .followedBy("middle").where(_.getName().equals("a"))                       .oneOrMore().allowCombinations()  .followedBy("end1").where(_.getName().equals("b"))输入：C D A1 A2 A3 D A4 B，会产生如下的输出：如果使用不确定松散连续： {C A1 B}，{C A1 A2 B}，{C A1 A3 B}，{C A1 A4 B}，{C A1 A2 A3 B}，{C A1 A2 A4 B}，{C A1 A3 A4 B}，{C A1 A2 A3 A4 B}如果不使用：{C A1 B}，{C A1 A2 B}，{C A1 A2 A3 B}，{C A1 A2 A3 A4 B} |
-
-模式组API：
-
-| **begin(#name)** | 定一个开始模式：val start = Pattern.begin[Event]("start") |
-| **begin(#pattern_sequence)** | 定一个开始模式：val start = Pattern.begin(    Pattern.begin[Event]("start").where(...).followedBy("middle").where(...)) |
-| **next(#name)** | 增加一个新的模式，匹配的事件必须是直接跟在前面匹配到的事件后面（严格连续）：val next = start.next("middle") |
-| **next(#pattern_sequence)** | 增加一个新的模式。匹配的事件序列必须是直接跟在前面匹配到的事件后面（严格连续）：val next = start.next(    Pattern.begin[Event]("start").where(...).followedBy("middle").where(...)) |
-| **followedBy(#name)** | 增加一个新的模式。可以有其他事件出现在匹配的事件和之前匹配到的事件中间（松散连续）：val followedBy = start.followedBy("middle") |
-| **followedBy(#pattern_sequence)** | 增加一个新的模式。可以有其他事件出现在匹配的事件和之前匹配到的事件中间（松散连续）：val followedBy = start.followedBy(    Pattern.begin[Event]("start").where(...).followedBy("middle").where(...)) |
-| **followedByAny(#name)** | 增加一个新的模式。可以有其他事件出现在匹配的事件和之前匹配到的事件中间， 每个可选的匹配事件都会作为可选的匹配结果输出（不确定的松散连续）：val followedByAny = start.followedByAny("middle") |
-| **followedByAny(#pattern_sequence)** | 增加一个新的模式。可以有其他事件出现在匹配的事件序列和之前匹配到的事件中间， 每个可选的匹配事件序列都会作为可选的匹配结果输出（不确定的松散连续）：val followedByAny = start.followedByAny(    Pattern.begin[Event]("start").where(...).followedBy("middle").where(...)) |
-| **notNext()** | 增加一个新的否定模式。匹配的（否定）事件必须直接跟在前面匹配到的事件之后 （严格连续）来丢弃这些部分匹配：val notNext = start.notNext("not") |
-| **notFollowedBy()** | 增加一个新的否定模式。即使有其他事件在匹配的（否定）事件和之前匹配的事件之间发生， 部分匹配的事件序列也会被丢弃（松散连续）：val notFollowedBy = start.notFollowedBy("not") |
-| **within(time)** | 定义匹配模式的事件序列出现的最大时间间隔。如果未完成的事件序列超过了这个事件，就会被丢弃：pattern.within(Time.seconds(10)) |
 
 **二、开发过程**
 
